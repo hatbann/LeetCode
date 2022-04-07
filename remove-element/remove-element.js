@@ -4,13 +4,19 @@
  * @return {number}
  */
 var removeElement = function(nums, val) {
-    let answer = nums.length;
     let len = nums.length;
-    for(let i = len-1; i>=0; i--){
-        if(nums[i] === val){
-            nums.splice(i,1);
-            answer--;
+    let slowpt = 0;
+    
+    for(let i = 0; i<len; i++){
+        if(nums[i] !== val){
+            nums[slowpt] = nums[i];
+            slowpt++;
         }
     }
-    return answer;
+    
+    for(let i = slowpt; i<len; i++){
+        nums.pop();
+    }
+    
+    return slowpt;
 };
