@@ -1,40 +1,38 @@
-//노드 생성
-class LinkedNode{
+class LinkNode{
     constructor(val, next){
-        this.val = val === undefined ? 0 : val;
-        this.next = next === undefined ? null : next;
+        this.val = val === undefined ? undefined : val;
+        this.next = next === undefined ? null : val;
     }
-}
-
-//Linked list 생성
+};
+    
 var MyLinkedList = function() {
     this.head = null;
 };
 
-
 MyLinkedList.prototype.getLength = function(){
-    let len = 0, cur = this.head;
+    let len = 0;
+    let cur = this.head;
     while(cur !== null){
-        cur = cur.next;
         len++;
+        cur = cur.next;
     }
     return len;
-};
+}
 
 
 /** 
- * get value if index is in range of linked list
+ *index가 valid하면 가져오기
  * @param {number} index
  * @return {number}
  */
 MyLinkedList.prototype.get = function(index) {
     if(index < 0 || index >= this.getLength()) return -1;
+    if(index === 0){return this.head.val;}
     let cur = this.head;
     for(let i = 0; i<index; i++){
         cur = cur.next;
     }
     return cur.val;
-    
 };
 
 /** 
@@ -42,26 +40,30 @@ MyLinkedList.prototype.get = function(index) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtHead = function(val) {
-    let newnode = new LinkedNode(val)
+    let newnode = new LinkNode(val);
+    if(this === null) {
+        this.head = newnode;
+        return;
+    }
     newnode.next = this.head;
     this.head = newnode;
 };
 
 /** 
- * if head is empty, you should add this value at head
  * @param {number} val
  * @return {void}
  */
 MyLinkedList.prototype.addAtTail = function(val) {
+    let newnode = new LinkNode(val);
     if(this.head === null){
         this.addAtHead(val);
         return;
     }
+    let len = this.getLength();
     let cur = this.head;
-    while(cur.next !== null){
+    for(let i = 0; i<len-1; i++){
         cur = cur.next;
     }
-    let newnode = new LinkedNode(val);
     cur.next = newnode;
 };
 
@@ -71,17 +73,22 @@ MyLinkedList.prototype.addAtTail = function(val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtIndex = function(index, val) {
-    if(index === 0) {
-        this.addAtHead(val); 
-        return;}
-    if(index === this.getLength()){
+    let len = this.getLength();
+    if(index < 0 || index > len){ console.log("here"); return;}
+    let newnode = new LinkNode(val);
+    let cur = this.head;
+    if(this.head === null) {
+        this.head = newnode;
+        return;
+    }
+    if(index === 0){
+        this.addAtHead(val);
+        return;
+    }
+    if(index === len){
         this.addAtTail(val);
         return;
     }
-    if(index > this.getLength()) return;
-    
-    let newnode = new LinkedNode(val);
-    let cur = this.head;
     for(let i = 0; i<index-1; i++){
         cur = cur.next;
     }
@@ -95,7 +102,10 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function(index) {
-    if(index < 0 || index >= this.getLength()) return;
+    let len = this.getLength();
+    if(index < 0 || index >= len){
+        return;
+    }
     if(index ===0){
         this.head = this.head.next;
         return;
@@ -104,11 +114,7 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
     for(let i = 0; i<index-1; i++){
         cur = cur.next;
     }
-    let deletenode = cur.next;
     cur.next = cur.next.next;
-    deletenode.next = null;
-    
-    
 };
 
 /** 
