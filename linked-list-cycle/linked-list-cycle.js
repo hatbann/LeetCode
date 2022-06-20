@@ -5,20 +5,24 @@
  *     this.next = null;
  * }
  */
-/*
-
 
 /**
  * @param {ListNode} head
  * @return {boolean}
  */
 var hasCycle = function(head) {
-    let fast = head, slow = head;
-    if(fast === null) return false;
-    while(fast && fast.next){
-        fast = fast.next.next;
+    if(!head) return false;
+    let fast = head;
+    let slow = head;
+    while(slow && fast){
+        if(!fast.next){
+            return false;
+        }
         slow = slow.next;
-        if(fast === slow) return true;
+        fast = fast.next.next;
+        if(slow === fast) return true;
+          
     }
     return false;
+    
 };
