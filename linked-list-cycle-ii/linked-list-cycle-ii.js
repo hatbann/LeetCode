@@ -11,24 +11,23 @@
  * @return {ListNode}
  */
 var detectCycle = function(head) {
-    let fast = head, slow = head;
- 
-    if(fast === null || fast.next === null){ //if there's no node or only one node
-        return null;
-    }
-    while(fast&&fast.next){
-        fast = fast.next.next;
-        slow = slow.next;
-        if(fast === slow){
-            break;
-        }
-    }
-    if(fast === null || fast.next ===null) return null;
+    if(!head) return null;
     
-    slow = head;
-    while(slow!==fast){
-        fast = fast.next;
-        slow = slow.next;
-    }
-    return slow;
+    let slower = head;
+    let faster = head;
+    while(slower && faster){
+        if(faster.next === null) return null;
+          slower = slower.next;
+          faster = faster.next.next;
+          if(slower=== faster) {
+              slower = head;
+              while(slower!== faster){
+                  slower = slower.next;
+                  faster = faster.next;
+              }
+              return slower;
+          }
+          }
+    return null;
+
 };
