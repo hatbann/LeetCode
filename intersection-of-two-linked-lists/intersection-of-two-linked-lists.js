@@ -12,20 +12,10 @@
  * @return {ListNode}
  */
 var getIntersectionNode = function(headA, headB) {
-    if(headA === headB) return headA;
-    if(headA === null|| headB === null) return null;
-    
-    let Apointer = headA, Bpointer = headB;
-    while(Apointer){
-        if(Apointer === Bpointer){
-            return Apointer;
-        }
-        if(Bpointer.next === null){
-            Bpointer = headB;
-            Apointer = Apointer.next;
-        }
-        else{
-                 Bpointer = Bpointer.next;   
-        }
+    let a = headA, b = headB
+    while (a !== b) {
+        a = !a ? headB : a.next
+        b = !b ? headA : b.next
     }
+    return a;
 };
