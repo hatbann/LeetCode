@@ -12,14 +12,17 @@
  * @return {TreeNode}
  */
 
-function recursive(root, p, q){
-    if(!root || root === p  || root === q) return root;
-    let left = recursive(root.left, p, q);
-    let right = recursive(root.right, p, q);
-    return (left && right) ? root : (left || right);
+function Traversal(root, p, q){
+    if(!root || root === p || root===q) return root;
+    
+    let left = Traversal(root.left, p, q);
+    let right = Traversal(root.right, p, q);
+    
+    return (left&&right) ? root : (left || right);
 }
 
 var lowestCommonAncestor = function(root, p, q) {
     
-    return recursive(root, p, q);
+    
+    return Traversal(root, p, q);
 };
