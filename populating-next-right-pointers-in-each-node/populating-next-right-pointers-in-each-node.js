@@ -13,11 +13,21 @@
  * @return {Node}
  */
 var connect = function(root) {
-    if(!root || !root.left) return root;
+    if(!root) return root;
+    if(root.left && root.right){
+        root.left.next = root.right;
+    }else{
+        return root;
+    }
     
-    root.left.next = root.right;
-    root.right.next = root.next? root.next.left : null;
+    if(root.left.next && root.left.right){
+        root.left.right.next = root.right.left;
+    }
+    if(root.right.next && root.right.right){
+        root.right.right.next = root.right.next.left;
+    }
     connect(root.left);
     connect(root.right);
+    
     return root;
 };
